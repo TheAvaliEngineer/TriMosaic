@@ -3,16 +3,19 @@ TriMosaic Programming Language Interpreter
 TheAvaliEngineer
 """
 
-versionNumber = "1.1.6"
+versionNumber = "1.3.1"
 
 def version(): print("\n" * 20 + "TriMosaic Interpreter v" + versionNumber + "\nTheAvaliEngineer")
 def readme():
+    with open("documentation_"+ versionNumber + ".txt", "w") as file:
+        file.write("") #Overwrites an old file
+
     with open("documentation_"+ versionNumber + ".txt", "a") as file:
         file.write("TriMosaic Language Interpreter Guide\n")
         file.write("TheAvaliEngineer\n")
         file.write("Version " + versionNumber + "\n\n")
         file.write("This language is a stylized form of the esoteric programming language   \n")
-        file.write("Brainfuck. Since this does not contain a Brainfuck interpreter, you     \n")
+        file.write("Brainf***. Since this does not contain a Brainf*** interpreter, you     \n")
         file.write("will have to supply your own - there are online options such as:        \n")
         file.write("https://sange.fi/esoteric/brainfuck/impl/interp/i.html                  \n")
         file.write("https://copy.sh/brainfuck/                                              \n")
@@ -24,9 +27,9 @@ def readme():
         file.write("-rpreter can only decode 24-bit bitmaps.                                \n")
         file.write("TriMosaic represents operations as different forms of triangles, with   \n")
         file.write("the added information of whether or not the perimeter is even or odd.   \n")
-        file.write("It includes whitespace characters for organization as well.             \n")
+        file.write("Operations are executed in order of largest to smallest triangle.       \n")
         file.write("\nThe function triMosaic.interpret(file_name) will export file_name.bmp \n")
-        file.write("as a .bf file (the notation for a BrainF*ck file) which can be opened in\n")
+        file.write("as a .bf file (the notation for a Brainf*** file) which can be opened in\n")
         file.write("a text editor such as Notepad.\n")
         file.write("\n    Operation Chart\n\n")
         file.write(" EVEN  |Scalene| Isocl.|\n")
@@ -51,6 +54,7 @@ from PIL import Image
 
 #Utility
 def getFirstEntry(l): return l[0]
+def coordSort(l): return int( str( l[0] ) + "0" + str(l[1]) )
 
 #Image handling
 
@@ -101,7 +105,7 @@ def getSurroundings(coords, imageArray):
 
     print("Surroundings Out List:", outList)
 
-    return [coords, [nPX, ePX, sPX, wPX]]
+    return outList
 
 #From a list of surroundings finds trios
 def matchPixelTrio(surroundArray): # [ [coords, [n, e, s, w]], [coords, [n, e, s, w]], [coords, [n, e, s, w]]
@@ -131,7 +135,7 @@ def matchPixelTrio(surroundArray): # [ [coords, [n, e, s, w]], [coords, [n, e, s
             group = list(dict.fromkeys(group)) #Culls redundant entries
             print("Color group", color, "culled:", group)
 
-            group.sort(key=getFirstEntry) #Sorts group to prevent multiple permutations appearing
+            group.sort(key=coordSort) #Sorts group to prevent multiple permutations appearing
             if len(group) == 3: coordGroups.append(group)
 
     for item in coordGroups: #Culls redundant entries
@@ -208,7 +212,7 @@ def outputBrainFuck(trisList, fileName):
         outList.append(decodeTri(tri)[1])
 
     print("\nTriList:", trisList)
-    print("\nInterpreted BrainF*ck:", ''.join(outList))
+    print("\nInterpreted BrainF***:", ''.join(outList))
 
     with open(fileName + ".bf", "w") as file:
         file.write(''.join(outList))
