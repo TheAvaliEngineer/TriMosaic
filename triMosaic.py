@@ -1,21 +1,21 @@
 """
-TriMosaic Programming Language Interpreter
+TriMosaic Programming Language Transpiler
 TheAvaliEngineer
 """
 
 versionNumber = "1.3.1"
 
-def version(): print("\n" * 20 + "TriMosaic Interpreter v" + versionNumber + "\nTheAvaliEngineer")
+def version(): print("\n" * 20 + "TriMosaic Transpiler v" + versionNumber + "\nTheAvaliEngineer")
 def readme():
     with open("documentation_"+ versionNumber + ".txt", "w") as file:
         file.write("") #Overwrites an old file
 
     with open("documentation_"+ versionNumber + ".txt", "a") as file:
-        file.write("TriMosaic Language Interpreter Guide\n")
+        file.write("TriMosaic Language Transpiler Guide\n")
         file.write("TheAvaliEngineer\n")
         file.write("Version " + versionNumber + "\n\n")
         file.write("This language is a stylized form of the esoteric programming language   \n")
-        file.write("Brainf***. Since this does not contain a Brainf*** interpreter, you     \n")
+        file.write("Brainf***. Since this does not contain a Brainf*** transpiler, you     \n")
         file.write("will have to supply your own - there are online options such as:        \n")
         file.write("https://sange.fi/esoteric/brainfuck/impl/interp/i.html                  \n")
         file.write("https://copy.sh/brainfuck/                                              \n")
@@ -217,8 +217,8 @@ def outputBrainFuck(trisList, fileName):
     with open(fileName + ".bf", "w") as file:
         file.write(''.join(outList))
 
-# Interpreter program
-def interpret(file_name):
+# Transpiler program
+def compile(file_name):
     print("\n\nProcessing image..\n\n")
     imageArray = convertBMPtoArray(file_name)
 
